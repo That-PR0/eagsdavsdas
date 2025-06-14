@@ -23,18 +23,11 @@
       width: 100%;
     }
 
-    .input-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      justify-content: center;
-      width: 100%;
-    }
-
     input {
-      width: 200px;
+      width: 300px;
       height: 40px;
       font-size: 18px;
+      margin: 10px 0;
       padding: 0 10px;
       border-radius: 6px;
       border: 1px solid #444;
@@ -135,10 +128,10 @@
   <button id="toggleBtn" class="toggle-btn" onclick="toggleSendMode()">Sending: Form Data</button>
   
   <div class="input-container">
-    <div id="formInputs" class="input-row">
-      <input type="text" id="input1" name="Username" placeholder="Username">
-      <input type="password" id="input2" name="Password" placeholder="Password">
-      <input type="text" id="input3" name="Reason" placeholder="Reason">
+    <div id="formInputs">
+      <input type="text" id="input1" name="Username" placeholder="Enter Username">
+      <input type="password" id="input2" name="Password" placeholder="Enter Password">
+      <input type="text" id="input3" name="Reason" placeholder="Reason for Action">
     </div>
     
     <div id="otherInput" class="hidden">
