@@ -16,18 +16,22 @@
       margin: 0;
     }
 
-    .input-container {
+    .form-group {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      width: 100%;
+      margin-bottom: 15px;
+      width: 300px;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-size: 16px;
     }
 
     input {
-      width: 300px;
+      width: 100%;
       height: 40px;
       font-size: 18px;
-      margin: 10px 0;
       padding: 0 10px;
       border-radius: 6px;
       border: 1px solid #444;
@@ -127,15 +131,25 @@
 <body>
   <button id="toggleBtn" class="toggle-btn" onclick="toggleSendMode()">Sending: Form Data</button>
   
-  <div class="input-container">
-    <div id="formInputs">
-      <input type="text" id="input1" name="Username" placeholder="Enter Username">
-      <input type="password" id="input2" name="Password" placeholder="Enter Password">
-      <input type="text" id="input3" name="Reason" placeholder="Reason for Action">
+  <div id="formInputs">
+    <div class="form-group">
+      <label for="input1">Enter Username</label>
+      <input type="text" id="input1" name="Username">
     </div>
-    
-    <div id="otherInput" class="hidden">
-      <input type="text" id="otherText" name="Other" placeholder="Enter other content">
+    <div class="form-group">
+      <label for="input2">Enter Password</label>
+      <input type="password" id="input2" name="Password">
+    </div>
+    <div class="form-group">
+      <label for="input3">Reason for Action</label>
+      <input type="text" id="input3" name="Reason">
+    </div>
+  </div>
+  
+  <div id="otherInput" class="hidden">
+    <div class="form-group">
+      <label for="otherText">Other Content</label>
+      <input type="text" id="otherText" name="Other">
     </div>
   </div>
   
